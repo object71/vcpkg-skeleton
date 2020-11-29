@@ -1,0 +1,28 @@
+vcpkg_from_github(
+    OUT_SOURCE_PATH SOURCE_PATH
+    REPO xiph/speexdsp
+    REF  64cbfa9bca7479a758351aa02bb4abdd76baa9e7 #1.2.0
+    SHA512 b92488e1efd4d763cd2d438b88a1b708d2a9d8f804dc2b016bfb29c4f7366624d3cf86a23645067393274e100c1bd6467def0eb98575f04ffcaf49b20f1f1105
+    HEAD_REF master
+)
+
+file(COPY ${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt DESTINATION ${SOURCE_PATH})
+
+set(USE_SSE OFF)
+if(VCPKG_TARGET_ARCHITECTURE STREQUAL "x64" OR VCPKG_TARGET_ARCHITECTURE STREQUAL "x86")
+    set(USE_SSE ON)
+endif()
+
+vcpkg_configure_cmake(
+    SOURCE_PATH ${SOURCE_PATH}
+    PREFER_NINJA
+    OPTIONS
+    -DUSE_SSE=${USE_SSE}
+)
+
+vcpkg_install_cmake()
+vcpkg_copy_pdbs()
+
+file(REMOVE_RECURSE ${CURRENT_PACKAGES_DIR}/debug/include)
+
+file(INSTALL "${SOURCE_PATH}/COPYING" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME "copyright")
