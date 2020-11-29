@@ -29,4 +29,4 @@ else()
     add_compile_definitions(NDEBUG=1)
 endif(${CMAKE_BUILD_TYPE} MATCHES Debug)
 
-add_subdirectory(Doom)
+add_subdirectory(Main)
