@@ -5,9 +5,6 @@ add_executable(Main
                src/Main.h
                )
 
-target_link_libraries(Main PRIVATE raylib)
+target_include_directories(Main PRIVATE ${raylib_INCLUDE_DIRS})
 
-#target_include_directories(Doom
-#                           PRIVATE
-#                           raylib
-#                           )
+target_link_libraries(Main PRIVATE ${raylib_LIBRARIES})
